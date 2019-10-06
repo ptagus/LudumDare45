@@ -94,7 +94,14 @@ public class ObjectPool : MonoBehaviour
     {
         for (int i = 0; i < count; i++)
         {
-            objects[i].TransparentObject();
+            if (objects[i].transform.childCount > 0)
+            {
+                if (objects[i].transform.GetChild(0).tag == "Transparent")
+                {
+                    objects[i].TransparentObject();
+                    Debug.Log("objects + " + objects[i].name);
+                }
+            }
         }
     }
 }

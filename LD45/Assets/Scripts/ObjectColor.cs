@@ -23,7 +23,7 @@ public class ObjectColor : MonoBehaviour
         if (trans)
         {
             itemColor.a -= Time.deltaTime * 0.1f;
-            GetComponent<MeshRenderer>().material.color = itemColor;
+            transform.GetChild(0).GetComponent<MeshRenderer>().material.color = itemColor;
             if(itemColor.a <= 0)
             {
                 trans = false;
@@ -97,7 +97,7 @@ public class ObjectColor : MonoBehaviour
     }
     public void TransparentObject()
     {
-        itemColor = GetComponent<MeshRenderer>().material.color;
+        itemColor = transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
         trans = true;
     }
 }
