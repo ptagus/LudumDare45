@@ -7,7 +7,7 @@ public class ObjectColor : MonoBehaviour
     [HideInInspector]
     public Color itemColor;
     Material material;
-    bool Red, Full;
+    bool Red, Full, trans;
     bool fullRed = true, fullGreen =true, fullBlue = true;
     float redcolor = 0,greencolor = 0,bluecolor = 0;
     float redcolorspeed = 0.1f;
@@ -20,6 +20,15 @@ public class ObjectColor : MonoBehaviour
 
     void Update()
     {
+        if (trans)
+        {
+            itemColor.a -= Time.deltaTime * 0.1f;
+            GetComponent<MeshRenderer>().material.color = itemColor;
+            if(itemColor.a <= 0)
+            {
+                trans = false;
+            }
+        }
         if (Red)
         {
             redcolor += Time.deltaTime * 0.1f;
@@ -85,5 +94,10 @@ public class ObjectColor : MonoBehaviour
         Debug.Log(fullparams.r + "      " + itemColor.g + "      " + itemColor.b);
         Full = true;
         Debug.Log("SetColorFull");
+    }
+    public void TransparentObject()
+    {
+        itemColor = GetComponent<MeshRenderer>().material.color;
+        trans = true;
     }
 }

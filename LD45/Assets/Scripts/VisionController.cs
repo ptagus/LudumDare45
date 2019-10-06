@@ -18,7 +18,6 @@ public class VisionController : MonoBehaviour
         vType = VisionType.Mono;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.A))
