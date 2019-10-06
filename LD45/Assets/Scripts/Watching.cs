@@ -26,8 +26,9 @@ public class Watching : MonoBehaviour
         {
             watch = true;
             wheelUI.watchiteratorCount++;
+            wheelUI.PlayWinSound();
             Debug.Log(wheelUI.watchiteratorCount + "watching");
-            if (wheelUI.watchiteratorCount > 2)
+            if (wheelUI.watchiteratorCount > 3)
             {
                 if (!wheelUI.color)
                 {
@@ -36,7 +37,7 @@ public class Watching : MonoBehaviour
                     Debug.Log("SetRed");
                 }
             }
-            if (wheelUI.watchiteratorCount > 5)
+            if (wheelUI.watchiteratorCount > 7)
             {
                 if (!wheelUI.fullcolor)
                 {
@@ -56,10 +57,13 @@ public class Watching : MonoBehaviour
             touch = true;            
             if (child.tag == "LightTag")
             {
+                wheelUI.touchiteratorCount++;
                 pool.SetShadows();
+                wheelUI.PlayWinSound();
             }
             else
             {
+                wheelUI.PlayWinSound();
                 wheelUI.touchiteratorCount++;
                 Debug.Log(wheelUI.touchiteratorCount + "touching");
                 if(wheelUI.touchiteratorCount > 3)
@@ -77,7 +81,28 @@ public class Watching : MonoBehaviour
 
     public void OnListen()
     {
-
+        if (GetComponent<AudioSource>())
+        {
+            if (this.tag == "beat")
+            {
+                GetComponent<AudioSource>().Play();
+            }
+            if (!listen)
+            {
+                listen = true;
+                wheelUI.listeniteratorCount++;
+                if (wheelUI.listeniteratorCount == 1)
+                {
+                    GetComponent<AudioSource>().Play();
+                }
+                if (wheelUI.listeniteratorCount == 2)
+                {
+                    GetComponent<AudioHighPassFilter>().enabled = false;
+                    GetComponent<AudioLowPassFilter>().enabled = false;
+                    StartCoroutine(wheelUI.Music());
+                }
+            }
+        }
     }
 
     private void OnMouseEnter()

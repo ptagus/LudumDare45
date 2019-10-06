@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class WheelUI : MonoBehaviour
 {
+
+    public GameUI game;
+    public GameObject sound;
     public GameObject wheel;
     GameObject interactableobject;
     [HideInInspector]
@@ -14,20 +17,11 @@ public class WheelUI : MonoBehaviour
     public int watchiteratorCount = 0;
     [HideInInspector]
     public int listeniteratorCount = 0;
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
     public void ActiveWheel(GameObject interactable)
     {
         interactableobject = interactable;
+
         wheel.SetActive(true);
     }
 
@@ -38,22 +32,42 @@ public class WheelUI : MonoBehaviour
 
     IEnumerator Disable()
     {
-        yield return new WaitForSeconds(2);
-        wheel.SetActive(false);
+        if (wheel.activeSelf)
+        {
+            yield return new WaitForSeconds(5);
+            wheel.SetActive(false);
+        }
+    }
+
+    public IEnumerator Music()
+    {
+        yield return new WaitForSeconds(15);
     }
 
     public void Watching()
     {
         interactableobject.GetComponent<Watching>().OnWatch();
+        if(touchiteratorCount > 8 && watchiteratorCount > 8)
+        {
+            game.SetWin();
+        }
     }
 
     public void Touching()
     {
+        if (touchiteratorCount > 8 && watchiteratorCount > 8)
+        {
+            game.SetWin();
+        }
         interactableobject.GetComponent<Watching>().OnTouch();
     }
 
     public void Listening()
     {
         interactableobject.GetComponent<Watching>().OnListen();
+    }
+    public void PlayWinSound()
+    {
+        GetComponent<AudioSource>().Play();
     }
 }
