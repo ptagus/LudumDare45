@@ -17,9 +17,10 @@ public class ShadowsLight : MonoBehaviour
     {
         if (castShadows)
         {
-            lights.intensity += Time.deltaTime * speedintensity;
-            if(lights.intensity > 1)
+            lights.shadowStrength += Time.deltaTime * speedintensity;
+            if(lights.shadowStrength > 0.95)
             {
+                lights.shadowStrength = 1;
                 castShadows = false;
             }
         }
